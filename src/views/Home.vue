@@ -16,3 +16,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .home {
+      border: 1px solid gold;
+  }
+</style>
