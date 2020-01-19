@@ -3,9 +3,9 @@ import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 
 // APIs
+// gmail
 import Unsplash from 'unsplash-js';
 // weather
-// gmail
 
 const app = express();
 dotenv.config();
@@ -17,14 +17,14 @@ const unsplash = new Unsplash.default({
 });
 
 // TODO:
+// [] gmail API
 // [x] unsplash API
 // [] weather API
-// [] gmail API
 
 // NOTE:
-// think about throttling?
+// think about throttling so I don't hit my daily pull limit
 // websockets so that all connected monitors see the same image
-// error handling
+// some error handling would be nice
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -42,13 +42,13 @@ app.get('/random-photo', (req, res) => {
     });
 });
 
-app.get('/weather-report', (req, res) => {
-  // TODO: weather report
+app.get('/top-daily-report', (req, res) => {
+  // TODO: Grab 'Top Daily Report...' from connected gmail
   res.send(req);
 });
 
-app.get('/top-daily-report', (req, res) => {
-  // TODO: Grab 'Top Daily Report...' from connected gmail
+app.get('/weather-report', (req, res) => {
+  // TODO: weather report
   res.send(req);
 });
 
