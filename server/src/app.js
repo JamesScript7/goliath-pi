@@ -4,7 +4,6 @@ import fetch from 'node-fetch';
 
 // gmail
 import Unsplash from 'unsplash-js';
-// weather
 
 const app = express();
 dotenv.config();
@@ -22,11 +21,6 @@ const unsplash = new Unsplash.default({
   accessKey: process.env.UNSPLASH_ACCESS_KEY,
   secret: process.env.UNSPLASH_SECRET_KEY,
 });
-
-// TODO:
-// [] gmail API
-// [x] unsplash API
-// [] weather API
 
 // NOTE:
 // think about throttling so I don't hit my daily pull limit
@@ -60,8 +54,18 @@ app.get('/top-daily-report', (req, res) => {
 });
 
 app.get('/weather-report', (req, res) => {
-  // TODO: weather report
-  res.send(req);
+  const zipCode = '10013';
+  const key = process.env.WEATHER_API_KEY;
+  const url = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&APPID=${key}`;
+
+  // TODO:
+  // We should send current and forecast
+
+  fetch(url)
+    .then(result => result.text())
+    .then((body) => {
+      res.send(body);
+    });
 });
 
 app.listen(4000, () => {
