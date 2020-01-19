@@ -11,6 +11,14 @@ const app = express();
 dotenv.config();
 global.fetch = fetch;
 
+const allowCrossDomain = (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+};
+app.use(allowCrossDomain);
+
 const unsplash = new Unsplash.default({
   accessKey: process.env.UNSPLASH_ACCESS_KEY,
   secret: process.env.UNSPLASH_SECRET_KEY,
@@ -31,15 +39,21 @@ app.get('/', (req, res) => {
 });
 
 app.get('/random-photo', (req, res) => {
-  unsplash.photos.getRandomPhoto()
-    .then(Unsplash.toJson).then((json) => {
-      console.log('req', req);
-      // NOTE: Do I need to prep the JSON in any way?
-      res.send(json);
-    }).catch((err) => {
-      // NOTE: Does this work?
-      res.send(err);
-    });
+  // unsplash.photos.getRandomPhoto()
+  //   .then(Unsplash.toJson).then((json) => {
+  //     console.log('req', req);
+  //     // NOTE: Do I need to prep the JSON in any way?
+  //     res.send(json);
+  //   }).catch((err) => {
+  //     // NOTE: Does this work?
+  //     res.send(err);
+  //   });
+
+  res.send({
+    urls: {
+      full: 'yay',
+    },
+  });
 });
 
 app.get('/top-daily-report', (req, res) => {
