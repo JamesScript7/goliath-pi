@@ -1,27 +1,28 @@
 <template>
   <div class="home">
+    <!-- Move to own component? -->
     <img alt="imgDescription" :src="imgUrl" class="wallpaper">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <DateAndTime />
+    <!-- TODO: -->
+    <!-- <CureatrDailyReport /> -->
+    <!-- <WeatherReport /> -->
   </div>
 </template>
-
-// Home:
-// [] wallpaper
-// [] time
-
-// Components:
-// [] gmail daily report
-// [] weather report
 
 <script>
 import axios from 'axios';
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import DateAndTime from '@/components/DateAndTime.vue';
+
+const PHOTO_REFRESH_INTERVAL = 10000;
 
 export default {
   name: 'home',
   components: {
-    HelloWorld,
+    DateAndTime,
+    // TODO:
+    // CureatrDailyReport
+    // WeatherReport
   },
   data() {
     return {
@@ -31,6 +32,7 @@ export default {
   methods: {
     grabRandomPhoto() {
       console.log('grabRandomPhoto');
+
       axios.get('http://localhost:4000/random-photo')
         .then((response) => {
           console.log('response', response);
@@ -40,9 +42,10 @@ export default {
     },
     photoCountdown() {
       console.log('photoCountdown');
-      setTimeout(() => {
+
+      setInterval(() => {
         this.grabRandomPhoto();
-      }, 10000);
+      }, PHOTO_REFRESH_INTERVAL);
     },
   },
   created() {
@@ -50,14 +53,14 @@ export default {
     this.grabRandomPhoto();
   },
   destroyed() {
-    clearTimeout(this.photoCountdown);
+    clearInterval(this.photoCountdown);
   },
 };
 </script>
 
 <style scoped>
   .home {
-      border: 1px solid gold;
+    position: relative;
   }
 
   .wallpaper {
