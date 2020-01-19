@@ -82,7 +82,7 @@ export default {
 
 /* DAY */
 .dateandtime__day {
-  font-size: 1.5em;
+  font-size: 2em;
 }
 
 /* MONTH AND DATE */
@@ -97,10 +97,10 @@ export default {
 }
 
 .dateandtime__time {
-  font-size: 3em;
+  font-size: 4em;
 }
 
 .dateandtime__amPm {
-  font-size: 0.5em;
+  font-size: 1em;
 }
 </style>

@@ -16,15 +16,13 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .wallpaper img {
-  /* Set rules to fill background */
+  /* width: 100%; */
+  min-width: 100%;
+  /* height: auto; */
   min-height: 100%;
-  /* Set up proportionate scaling */
-  width: 100%;
-  height: auto;
-  /* Set up positioning */
   position: fixed;
   top: 0;
   left: 0;
-  /* filter: blur(1px); */
+  filter: blur(1px);
 }
 </style>
