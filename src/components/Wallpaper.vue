@@ -13,12 +13,9 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .wallpaper img {
-  /* width: 100%; */
   min-width: 100%;
-  /* height: auto; */
   min-height: 100%;
   position: fixed;
   top: 0;

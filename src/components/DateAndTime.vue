@@ -2,13 +2,13 @@
   <div class="dateandtime">
     <div class="flex-container">
       <section class="dateandtime__left flex-column">
-        <div class="dateandtime__day">{{ day }}</div>
-        <div class="dateandtime__monthanddate">{{ monthAndDate }}</div>
+        <div class="dateandtime__day">{{ moment.day }}</div>
+        <div class="dateandtime__monthanddate">{{ moment.monthAndDate }}</div>
       </section>
       <section class="dateandtime__right flex-column">
         <div class="dateandtime__innerwrap">
-          <div class="dateandtime__time">{{ time }}</div>
-          <div class="dateandtime__amPm">{{ amPm }}</div>
+          <div class="dateandtime__time">{{ moment.time }}</div>
+          <div class="dateandtime__amPm">{{ moment.amPm }}</div>
         </div>
       </section>
     </div>
@@ -23,23 +23,10 @@
 // -----------------------
 
 <script>
-import moment from 'moment';
-
 export default {
   name: 'DateAndTime',
-  data() {
-    return {
-      day: moment().format('dddd'),
-      monthAndDate: moment().format('MMM Do'),
-      time: moment().format('h:mm'),
-      amPm: moment().format('a'),
-    };
-  },
-  methods: {
-    updateTime() {
-      // TODO:
-      // Refresh every minute?
-    },
+  props: {
+    moment: Object,
   },
 };
 </script>
@@ -52,7 +39,7 @@ export default {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 2rem;
   font-variant: petite-caps;
-  color: white;
+  color: #FFF;
 }
 
 .flex-container {
