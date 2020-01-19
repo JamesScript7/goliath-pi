@@ -1,8 +1,6 @@
 <template>
   <div class="home">
-    <!-- Move to own component? -->
-    <img alt="imgDescription" :src="imgUrl" class="wallpaper">
-    <!-- <Wallpaper /> -->
+    <Wallpaper v-bind:imgUrl="imgUrl" />
     <DateAndTime />
     <!-- <CureatrDailyReport /> -->
     <!-- <WeatherReport /> -->
@@ -22,15 +20,16 @@
 import axios from 'axios';
 // @ is an alias to /src
 import DateAndTime from '@/components/DateAndTime.vue';
+import Wallpaper from '@/components/Wallpaper.vue';
 
-const PHOTO_REFRESH_INTERVAL = 10000;
+const PHOTO_REFRESH_INTERVAL = 20000;
 const RANDOM_PHOTO_API_URL = 'http://localhost:4000/random-photo';
 
 export default {
   name: 'home',
   components: {
     DateAndTime,
-    // Wallpaper
+    Wallpaper,
     // CureatrDailyReport
     // WeatherReport
   },
@@ -73,18 +72,7 @@ export default {
 <style scoped>
   .home {
     position: relative;
-  }
-
-  .wallpaper {
-    /* Set rules to fill background */
-    min-height: 100%;
-    /* Set up proportionate scaling */
     width: 100%;
-    height: auto;
-    /* Set up positioning */
-    position: fixed;
-    top: 0;
-    left: 0;
-    /* filter: blur(1px); */
+    height: 100vh;
   }
 </style>
