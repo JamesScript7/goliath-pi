@@ -1,26 +1,36 @@
 <template>
   <div class="dateandtime__container">
-    <p>DATE AND TIME</p>
+    <!-- TODO: structure -->
+    <p>{{ day }}</p>
+    <p>{{ monthAndDate }}</p>
+    <p>{{ time }}</p>
   </div>
 </template>
+
+// Template:
+// -----------------------
+// |  SUNDAY  |          |
+// |----------| 12:01 am |
+// | Jan 19th |          |
+// -----------------------
 
 <script>
 import moment from 'moment';
 
-// Template:
-// -----------------------
-// | SUNDAY   | 12:01 am |
-// | Jan 19th |          |
-// -----------------------
-
-console.log('DAY:', moment().format('dddd')); // Sunday
-console.log('DATE:', moment().format('MMM Do')); // Jan 19th
-console.log('TIME:', moment().format('h:mm a')); // 12:01 am
-
 export default {
   name: 'DateAndTime',
-  props: {
-    msg: String,
+  data() {
+    return {
+      day: moment().format('dddd'),
+      monthAndDate: moment().format('MMM Do'),
+      time: moment().format('h:mm a'),
+    };
+  },
+  methods: {
+    updateTime() {
+      // TODO:
+      // Refresh every minute?
+    },
   },
 };
 </script>

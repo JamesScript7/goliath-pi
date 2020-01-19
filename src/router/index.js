@@ -10,6 +10,11 @@ const routes = [
     name: 'home',
     component: Home,
   },
+  // NOTE: Handle catch all with NotFound component?
+  // {
+  //   path: '*',
+  //   component: NotFound,
+  // },
 ];
 
 const router = new VueRouter({
@@ -17,5 +22,8 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+// NOTE: handle unhandled routes and redirects to home
+// router.replace({ path: '/', redirect: '/' });
 
 export default router;

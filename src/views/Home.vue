@@ -2,12 +2,21 @@
   <div class="home">
     <!-- Move to own component? -->
     <img alt="imgDescription" :src="imgUrl" class="wallpaper">
+    <!-- <Wallpaper /> -->
     <DateAndTime />
-    <!-- TODO: -->
     <!-- <CureatrDailyReport /> -->
     <!-- <WeatherReport /> -->
   </div>
 </template>
+
+// PERHAPS timer can live here and update:
+// Wallpaper component every x minutes
+// DateAndTime component every x seconds
+
+// TODO:
+// create <Wallpaper /> and pass props: url
+// move moment.js here and pass day, date, and time props into <DateAndTime />
+// Add Cureatr logo somewhere?
 
 <script>
 import axios from 'axios';
@@ -16,13 +25,12 @@ import DateAndTime from '@/components/DateAndTime.vue';
 
 const PHOTO_REFRESH_INTERVAL = 10000;
 const RANDOM_PHOTO_API_URL = 'http://localhost:4000/random-photo';
-const TEST_URL_FOR_RANDOM_PHOTO = 'https://source.unsplash.com/random/2048x1536';
 
 export default {
   name: 'home',
   components: {
     DateAndTime,
-    // TODO:
+    // Wallpaper
     // CureatrDailyReport
     // WeatherReport
   },
@@ -39,9 +47,8 @@ export default {
         .then((response) => {
           console.log('response', response);
 
-          // TODO: uncomment and edit when ready
-          // this.imgUrl = `${this.imgUrl}${response.data.urls.full}`;
-          this.imgUrl = TEST_URL_FOR_RANDOM_PHOTO;
+          // TODO: prep the data better?
+          this.imgUrl = response.data.urls.full;
         });
     },
     photoCountdown() {
@@ -54,7 +61,7 @@ export default {
   },
   created() {
     // TODO: uncomment when ready
-    // this.photoCountdown();
+    this.photoCountdown();
     this.grabRandomPhoto();
   },
   destroyed() {
@@ -78,7 +85,6 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    /* TODO: perhaps remove? */
-    filter: blur(1px);
+    /* filter: blur(1px); */
   }
 </style>

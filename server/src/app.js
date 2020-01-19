@@ -2,7 +2,6 @@ import express from 'express';
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 
-// APIs
 // gmail
 import Unsplash from 'unsplash-js';
 // weather
@@ -49,10 +48,9 @@ app.get('/random-photo', (req, res) => {
   //     res.send(err);
   //   });
 
+  const TEST_URL_FOR_RANDOM_PHOTO = 'https://source.unsplash.com/random/2048x1536';
   res.send({
-    urls: {
-      full: 'yay',
-    },
+    urls: { full: TEST_URL_FOR_RANDOM_PHOTO },
   });
 });
 
