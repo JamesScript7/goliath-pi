@@ -2,13 +2,24 @@ import express from 'express';
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 
-// gmail
 import Unsplash from 'unsplash-js';
+import {
+  forecastEngine,
+  kelvinToFahrenheit,
+  // eslint-disable-next-line import/extensions
+} from './helper/util.js';
 
-const app = express();
+// TODO: REMOVE WHEN READY
+import {
+  currentData,
+  forecastData,
+  // eslint-disable-next-line import/extensions
+} from './helper/factory.js';
+
 dotenv.config();
 global.fetch = fetch;
 
+const app = express();
 const allowCrossDomain = (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET');
@@ -54,18 +65,35 @@ app.get('/top-daily-report', (req, res) => {
 });
 
 app.get('/weather-report', (req, res) => {
-  const zipCode = '10013';
-  const key = process.env.WEATHER_API_KEY;
-  const url = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&APPID=${key}`;
+  // const zipCode = '10013';
+  // const key = process.env.WEATHER_API_KEY;
+  // const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&APPID=${key}`;
+  // const FiveDayforcastWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?zip=${zipCode},us&APPID=${key}`;
+  // const currentData = {};
 
-  // TODO:
-  // We should send current and forecast
+  // fetch(currentWeatherUrl)
+  //   .then(result => result.text())
+  //   .then((currentBody) => {
+  //     const current = JSON.parse(currentBody);
 
-  fetch(url)
-    .then(result => result.text())
-    .then((body) => {
-      res.send(body);
-    });
+  //     // NOTE: Use destructuring:
+  //     currentData.temp = kelvinToFahrenheit(current.main.temp);
+  //     currentData.temp_min = kelvinToFahrenheit(current.main.temp_min);
+  //     currentData.temp_max = kelvinToFahrenheit(current.main.temp_max);
+  //     currentData.description = current.weather[0].description;
+  //     currentData.icon = `https://openweathermap.org/img/w/${current.weather[0].icon}.png`;
+
+  //     fetch(FiveDayforcastWeatherUrl)
+  //       .then(result => result.text())
+  //       .then((forecastBody) => {
+  //         const forecast = JSON.parse(forecastBody);
+  //         const forecastData = forecastEngine(forecast);
+
+  //         res.send({ currentData, forecastData });
+  //       });
+  //   });
+
+  res.send({ currentData, forecastData });
 });
 
 app.listen(4000, () => {

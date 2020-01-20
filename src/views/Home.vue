@@ -1,15 +1,18 @@
 <template>
   <div class="home">
-    <Wallpaper v-bind:imgUrl="imgUrl" />
+    <Wallpaper :imgUrl="imgUrl" />
     <!-- <CureatrDailyReport /> -->
-    <DateAndTime v-bind:moment="moment" />
-    <WeatherReport />
+    <DateAndTime :moment="moment" />
+    <WeatherReport
+      :current="currentWeatherData"
+      :forecast="forecastWeatherData"
+      />
   </div>
 </template>
 
 // TODO:
 // Add Cureatr logo
-// WeatherReport client and serverside
+// gmail api omg
 
 <script>
 import axios from 'axios';
@@ -43,6 +46,8 @@ export default {
         time: moment().format('h:mm'),
         amPm: moment().format('a'),
       },
+      currentWeatherData: {},
+      forecastWeatherData: [],
     };
   },
   methods: {
@@ -51,9 +56,13 @@ export default {
 
       axios.get(RANDOM_PHOTO_API_URL)
         .then((response) => {
-          // if status is ok check?
-          // NOTE: prep the data better?
-          this.imgUrl = response.data.urls.full;
+          if (response.status === 200) {
+            this.imgUrl = response.data.urls.full;
+          } else {
+            console.error('response:', response);
+          }
+        }).catch((err) => {
+          console.error('Axios unsplash error:', err);
         });
     },
     grabWeatherReport() {
@@ -61,14 +70,18 @@ export default {
 
       axios.get(WEATHER_REPORT_API_URL)
         .then((response) => {
-          console.log(response);
-          // if status is ok check?
-          // NOTE: prep the data better?
-          // this.imgUrl = response.data.urls.full;
+          if (response.status === 200) {
+            this.currentWeatherData = response.data.currentData;
+            this.forecastWeatherData = response.data.forecastData;
+          } else {
+            console.error('response', response);
+          }
+        }).catch((err) => {
+          console.error('Axios openweathermap error:', err);
         });
     },
-    photoCountdown() {
-      console.log('photoCountdown');
+    updatePhoto() {
+      console.log('updatePhoto');
 
       setInterval(() => {
         this.grabRandomPhoto();
@@ -91,18 +104,22 @@ export default {
 
       setInterval(() => {
         console.log('updateWeather setInterval');
-        // TODO:
-        // Updates weather every 30 minutes?
+
+        this.grabWeatherReport();
       }, THIRTY_MINUTES);
     },
   },
   created() {
-    this.photoCountdown();
     this.grabRandomPhoto();
-    this.updateTime();
+    this.grabWeatherReport();
+
+    // setIntervals
+    this.updatePhoto();
+    // this.updateTime();
+    // this.updateWeather();
   },
   destroyed() {
-    clearInterval(this.photoCountdown);
+    clearInterval(this.updatePhoto);
     clearInterval(this.updateTime);
   },
 };
