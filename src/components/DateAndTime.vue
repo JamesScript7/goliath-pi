@@ -39,7 +39,7 @@ export default {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 2rem;
   font-variant: petite-caps;
-  color: #FFF;
+  color: #fff;
 }
 
 .flex-container {
