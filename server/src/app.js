@@ -3,18 +3,18 @@ import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 
 import Unsplash from 'unsplash-js';
-import {
-  forecastEngine,
-  kelvinToFahrenheit,
-  // eslint-disable-next-line import/extensions
-} from './helper/util.js';
+// import {
+//   forecastEngine,
+//   kelvinToFahrenheit,
+//   // eslint-disable-next-line import/extensions
+// } from './helpers/util.js';
 
 // TODO: REMOVE WHEN READY
 import {
   currentData,
   forecastData,
   // eslint-disable-next-line import/extensions
-} from './helper/factory.js';
+} from './helpers/factory.js';
 
 dotenv.config();
 global.fetch = fetch;
@@ -53,6 +53,7 @@ app.get('/random-photo', (req, res) => {
   //     res.send(err);
   //   });
 
+  // TODO: REMOVE WHEN READY
   const TEST_URL_FOR_RANDOM_PHOTO = 'https://source.unsplash.com/random/2048x1536';
   res.send({
     urls: { full: TEST_URL_FOR_RANDOM_PHOTO },
@@ -93,6 +94,7 @@ app.get('/weather-report', (req, res) => {
   //       });
   //   });
 
+  // TODO: REMOVE WHEN READY
   res.send({ currentData, forecastData });
 });
 

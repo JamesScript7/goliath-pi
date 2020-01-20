@@ -1,11 +1,12 @@
 <template>
   <div class="weatherreport">
-      <p>Weather Report</p>
+    <div class="current">
       <p>{{ current.temp }}</p>
       <p>{{ current.temp_min }}</p>
       <p>{{ current.temp_max }}</p>
       <p>{{ current.description }}</p>
       <img :alt="current.description" :src="current.icon" />
+    </div>
   </div>
 </template>
 
@@ -30,6 +31,10 @@ export default {
 .weatherreport {
     position: fixed;
     bottom: 0;
+    width: 100%;
     color: darkcyan;
 }
+
+/* .current {} */
+/* .forecast {} */
 </style>
