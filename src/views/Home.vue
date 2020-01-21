@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <Wallpaper :imgUrl="imgUrl" />
+    <Wallpaper
+      :imgUrl="imgUrl"
+      :imgDescription="imgDescription" />
     <!-- <CureatrDailyReport /> -->
     <DateAndTime :moment="moment" />
     <WeatherReport
@@ -40,6 +42,7 @@ export default {
   data() {
     return {
       imgUrl: '',
+      imgDescription: '',
       moment: {
         day: moment().format('dddd'),
         monthAndDate: moment().format('MMM Do'),
@@ -57,6 +60,9 @@ export default {
       axios.get(RANDOM_PHOTO_API_URL)
         .then((response) => {
           if (response.status === 200) {
+            // Maybe we can use for something? response.data.color
+
+            this.imgDescription = response.data.alt_description || response.data.description;
             this.imgUrl = response.data.urls.full;
           } else {
             console.error('response:', response);
@@ -113,10 +119,10 @@ export default {
     this.grabRandomPhoto();
     this.grabWeatherReport();
 
-    // setIntervals
+    // timers
     this.updatePhoto();
-    // this.updateTime();
-    // this.updateWeather();
+    this.updateTime();
+    this.updateWeather();
   },
   destroyed() {
     clearInterval(this.updatePhoto);

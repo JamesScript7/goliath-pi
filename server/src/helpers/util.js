@@ -17,18 +17,23 @@ export function forecastEngine(forecast) {
       obj[t] = {};
       obj[t].temp = [];
     }
-    function updateObj() {
+    function updateObj(param) {
       obj[t].day = t;
       obj[t].temp.push(kelvinToFahrenheit(el.main.temp));
       obj[t].description = el.weather[0].description;
       obj[t].icon = `https://openweathermap.org/img/w/${el.weather[0].icon}.png`;
+
+      if (!param) {
+        // force day icon
+        obj[t].icon = `https://openweathermap.org/img/w/${el.weather[0].icon.replace('n', 'd')}.png`;
+      }
     }
 
     if (i === forecast.list.length - 1) {
       // Push current at end of the array.
-      updateObj();
-      obj[current].min = kelvinToFahrenheit(Math.min(...obj[current].temp));
-      obj[current].max = kelvinToFahrenheit(Math.max(...obj[current].temp));
+      updateObj(true);
+      obj[current].min = Math.min(...obj[current].temp);
+      obj[current].max = Math.max(...obj[current].temp);
 
       result.push(obj[current]);
     } else if (i !== 0 && t === current) {
@@ -37,8 +42,8 @@ export function forecastEngine(forecast) {
     } else if (i !== 0 && t !== current) {
       // push to result because this means
       // we are on to the next day.
-      obj[current].min = kelvinToFahrenheit(Math.min(...obj[current].temp));
-      obj[current].max = kelvinToFahrenheit(Math.max(...obj[current].temp));
+      obj[current].min = Math.min(...obj[current].temp);
+      obj[current].max = Math.max(...obj[current].temp);
 
       result.push(obj[current]);
       initializeKey();

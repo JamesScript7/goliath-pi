@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="weatherreport__forecast">
-      <div class="weatherreport__days" v-for="(item, index) in forecast" :key="index-item.day">
+      <div class="weatherreport__days" v-for="(item, index) in forecast" :key="index">
         <div>{{ item.day }}</div>
         <img :alt="item.description" :src="item.icon" />
         <div>{{ item.min }}/{{ item.max }}</div>
@@ -105,7 +105,7 @@ export default {
 
 .weatherreport__days {
   flex-grow: 1;
-  border-left: 1px solid #000;
+  border-left: 1px solid #555;
 }
 
 .days__description {

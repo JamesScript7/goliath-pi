@@ -1,6 +1,6 @@
 <template>
   <div class="wallpaper">
-    <img alt="imgDescription" :src="imgUrl">
+    <img :alt="imgDescription" :src="imgUrl">
   </div>
 </template>
 
@@ -9,6 +9,7 @@ export default {
   name: 'Wallpaper',
   props: {
     imgUrl: String,
+    imgDescription: String,
   },
 };
 </script>
