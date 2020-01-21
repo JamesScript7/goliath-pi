@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import express from 'express';
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
@@ -6,14 +7,12 @@ import Unsplash from 'unsplash-js';
 import {
   forecastEngine,
   kelvinToFahrenheit,
-  // eslint-disable-next-line import/extensions
 } from './helpers/util.js';
 
 // NOTE: for testing with mock data
 // import {
 //   currentData,
 //   forecastData,
-//   // eslint-disable-next-line import/extensions
 // } from './helpers/factory.js';
 
 dotenv.config();

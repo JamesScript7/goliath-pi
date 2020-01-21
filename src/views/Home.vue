@@ -54,12 +54,10 @@ export default {
   },
   methods: {
     grabRandomPhoto() {
-      console.log('grabRandomPhoto');
-
       axios.get(RANDOM_PHOTO_API_URL)
         .then((response) => {
           if (response.status === 200) {
-            // Maybe we can use for something? response.data.color
+            // useful? response.data.color
 
             this.imgDescription = response.data.alt_description || response.data.description;
             this.imgUrl = response.data.urls.full;
@@ -71,8 +69,6 @@ export default {
         });
     },
     grabWeatherReport() {
-      console.log('grabWeatherReport');
-
       axios.get(WEATHER_REPORT_API_URL)
         .then((response) => {
           if (response.status === 200) {
@@ -86,15 +82,12 @@ export default {
         });
     },
     updatePhoto() {
-      console.log('updatePhoto');
-
       setInterval(() => {
+        console.log('updatePhoto');
         this.grabRandomPhoto();
       }, PHOTO_REFRESH_INTERVAL);
     },
     updateTime() {
-      console.log('updateTime');
-
       setInterval(() => {
         console.log('updateTime setInterval');
         const currentTime = moment().format('h:mm');
@@ -105,11 +98,8 @@ export default {
       }, ONE_SECOND);
     },
     updateWeather() {
-      console.log('updateWeather');
-
       setInterval(() => {
         console.log('updateWeather setInterval');
-
         this.grabWeatherReport();
       }, THIRTY_MINUTES);
     },
