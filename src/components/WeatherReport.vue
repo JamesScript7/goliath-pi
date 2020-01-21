@@ -1,28 +1,33 @@
 <template>
   <div class="weatherreport">
     <div class="weatherreport__current">
-      <div>{{ current.temp }}</div>
-      <div>{{ current.temp_min }}</div>
-      <div>{{ current.temp_max }}</div>
-      <div>{{ current.description }}</div>
-      <img :alt="current.description" :src="current.icon" />
+      <div class="current__left">
+        <div>Today</div>
+        <div class="current__temp">{{ current.temp }}</div>
+      </div>
+      <div class="current__right">
+        <!-- <div>{{ current.temp_min }}</div> -->
+        <!-- <div>{{ current.temp_max }}</div> -->
+        <img :alt="current.description" :src="current.icon" />
+        <div>{{ current.description }}</div>
+      </div>
     </div>
     <div class="weatherreport__forecast">
-      <div class="weatherreport__days">tue</div>
-      <div class="weatherreport__days">wed</div>
-      <div class="weatherreport__days">thu</div>
-      <div class="weatherreport__days">fri</div>
-      <div class="weatherreport__days">sat</div>
+      <div class="weatherreport__days">Tues</div>
+      <div class="weatherreport__days">Wed</div>
+      <div class="weatherreport__days">Thurs</div>
+      <div class="weatherreport__days">Fri</div>
+      <div class="weatherreport__days">Sat</div>
     </div>
   </div>
 </template>
 
 // Template:
-// -------------------------------------------------
-// |  Today     |  Tues    | Wed       | Thurs     |
-// |  63        |  60/52   | 63/51     | 78/53     |
-// |  clear sky |  cloudy  | overcast  | clear sky |
-// -------------------------------------------------
+// ------------------------------------------------------------------
+// |  Today     [    ]           |  Tues    | Wed       | Thurs     |
+// |  [ 63 ]    [icon] clear sky |  60/52   | 63/51     | 78/53     |
+// |  [    ]    [    ]           |  cloudy  | overcast  | clear sky |
+// ------------------------------------------------------------------
 
 <script>
 export default {
@@ -41,11 +46,24 @@ export default {
     width: 100%;
     display: flex;
     color: #fff;
-    background-color: rgb(8,8,8);
+    background-color: rgba(8,8,8, 0.95);
 }
 
 .weatherreport__current {
   flex: 1;
+  text-align: left;
+  padding: 1.5em 1.5em 1.5em 3em;
+  display: flex;
+}
+
+.current__temp {
+  font-size: 4.5rem;
+}
+
+.current__temp::after {
+  content: '\2109';
+  font-size: 1rem;
+  vertical-align: text-top;
 }
 
 .weatherreport__forecast {
@@ -53,13 +71,10 @@ export default {
   display: flex;
 }
 
-/* TEST CSS */
 .weatherreport__days {
   flex-grow: 1;
-  background-color: #1f3056;
+  border-left: 1px solid black;
 }
 
-.weatherreport__days:nth-child(odd) {
-  background-color: #476cc6;
-}
+/* .weatherreport__days:nth-child(odd) {} */
 </style>
