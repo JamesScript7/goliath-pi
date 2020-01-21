@@ -15,8 +15,8 @@ export const forecastData = [{
   day: 'Mon',
   description: 'clear sky',
   icon: 'https://openweathermap.org/img/w/01n.png',
-  min: -415,
-  max: -413,
+  min: 25,
+  max: 26,
 }, {
   temp: [
     25,
@@ -31,8 +31,8 @@ export const forecastData = [{
   day: 'Tue',
   description: 'overcast clouds',
   icon: 'https://openweathermap.org/img/w/04n.png',
-  min: -415,
-  max: -400,
+  min: 25,
+  max: 33,
 }, {
   temp: [
     32,
@@ -47,8 +47,8 @@ export const forecastData = [{
   day: 'Wed',
   description: 'clear sky',
   icon: 'https://openweathermap.org/img/w/01n.png',
-  min: -406,
-  max: -397,
+  min: 30,
+  max: 35,
 }, {
   temp: [
     36,
@@ -63,8 +63,8 @@ export const forecastData = [{
   day: 'Thu',
   description: 'overcast clouds',
   icon: 'https://openweathermap.org/img/w/04n.png',
-  min: -397,
-  max: -388,
+  min: 35,
+  max: 40,
 }, {
   temp: [
     38,
@@ -79,8 +79,8 @@ export const forecastData = [{
   day: 'Fri',
   description: 'overcast clouds',
   icon: 'https://openweathermap.org/img/w/04n.png',
-  min: -393,
-  max: -386,
+  min: 37,
+  max: 40,
 }, {
   temp: [
     41,
@@ -93,6 +93,6 @@ export const forecastData = [{
   day: 'Sat',
   description: 'light rain',
   icon: 'https://openweathermap.org/img/w/10d.png',
-  min: -389,
-  max: -384,
+  min: 39,
+  max: 42,
 }];

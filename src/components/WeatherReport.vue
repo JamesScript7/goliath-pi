@@ -2,32 +2,37 @@
   <div class="weatherreport">
     <div class="weatherreport__current">
       <div class="current__left">
-        <div>Today</div>
-        <div class="current__temp">{{ current.temp }}</div>
+        <div>
+          <div>Today</div>
+          <div class="current__temp">{{ current.temp }}</div>
+        </div>
+        <div>
+          <div class="current__minmax">{{ current.temp_min }} / {{ current.temp_max }}</div>
+        </div>
       </div>
       <div class="current__right">
-        <!-- <div>{{ current.temp_min }}</div> -->
-        <!-- <div>{{ current.temp_max }}</div> -->
-        <img :alt="current.description" :src="current.icon" />
-        <div>{{ current.description }}</div>
+        <img class="current__icon" :alt="current.description" :src="current.icon" />
+        <div class="current__description">{{ current.description }}</div>
       </div>
     </div>
     <div class="weatherreport__forecast">
-      <div class="weatherreport__days">Tues</div>
-      <div class="weatherreport__days">Wed</div>
-      <div class="weatherreport__days">Thurs</div>
-      <div class="weatherreport__days">Fri</div>
-      <div class="weatherreport__days">Sat</div>
+      <div class="weatherreport__days" v-for="(item, index) in forecast" :key="index-item.day">
+        <div>{{ item.day }}</div>
+        <img :alt="item.description" :src="item.icon" />
+        <div>{{ item.min }}/{{ item.max }}</div>
+        <div class="days__description">{{ item.description }}</div>
+      </div>
     </div>
   </div>
 </template>
 
 // Template:
-// ------------------------------------------------------------------
-// |  Today     [    ]           |  Tues    | Wed       | Thurs     |
-// |  [ 63 ]    [icon] clear sky |  60/52   | 63/51     | 78/53     |
-// |  [    ]    [    ]           |  cloudy  | overcast  | clear sky |
-// ------------------------------------------------------------------
+// ---------------------------------------------------------------------
+// |  Today                         |  Tues    | Wed       | Thurs     |
+// |                                |  [icon]  | [icon]    | [icon]    |
+// |  [ 63 ]      [icon] clear sky  |  60/52   | 63/51     | 78/53     |
+// |  [    ]52/65                   |  cloudy  | overcast  | clear sky |
+// ---------------------------------------------------------------------
 
 <script>
 export default {
@@ -52,7 +57,7 @@ export default {
 .weatherreport__current {
   flex: 1;
   text-align: left;
-  padding: 1.5em 1.5em 1.5em 3em;
+  padding: 1.5rem 1.5rem 1.5rem 3rem;
   display: flex;
 }
 
@@ -66,15 +71,45 @@ export default {
   vertical-align: text-top;
 }
 
+.current__left {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+}
+
+.current__right {
+  flex: 2;
+  align-items: center;
+  margin-left: 2rem;
+  display: flex;
+}
+
+.current__minmax {
+  line-height: 2.5rem;
+}
+
+.current__icon {
+  width: 100px;
+}
+
+.current__description {
+  font-size: 2rem;
+  text-transform: capitalize;
+}
+
 .weatherreport__forecast {
   flex: 1;
+  padding: 1em;
   display: flex;
 }
 
 .weatherreport__days {
   flex-grow: 1;
-  border-left: 1px solid black;
+  border-left: 1px solid #000;
 }
 
-/* .weatherreport__days:nth-child(odd) {} */
+.days__description {
+  margin-top: 10px;
+}
+
 </style>
