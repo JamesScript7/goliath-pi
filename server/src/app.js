@@ -57,6 +57,8 @@ app.get('/random-photo', (req, res) => {
   // NOTE: for testing with mock data
   // const TEST_URL_FOR_RANDOM_PHOTO = 'https://source.unsplash.com/random/2048x1536';
   // res.send({
+  //   alt_description: 'alt description example',
+  //   description: 'description example',
   //   urls: { full: TEST_URL_FOR_RANDOM_PHOTO },
   // });
 });

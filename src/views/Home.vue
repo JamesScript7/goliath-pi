@@ -13,7 +13,6 @@
 </template>
 
 // TODO:
-// Add Cureatr logo
 // gmail api omg
 
 <script>
