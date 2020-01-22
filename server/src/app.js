@@ -1,4 +1,4 @@
-/* eslint-disable import/extensions, camelcase, prefer-template, prefer-destructuring, no-shadow, no-use-before-define, consistent-return */
+/* eslint-disable */
 import express from 'express';
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
@@ -7,16 +7,17 @@ import readline from 'readline';
 import googleapis from 'googleapis';
 // import Unsplash from 'unsplash-js';
 
+import {
+  parseSnippet,
+  // forecastEngine,
+  // kelvinToFahrenheit,
+} from './helpers/util.js';
+
 // NOTE: for testing with mock data
 import {
   currentData,
   forecastData,
 } from './helpers/factory.js';
-
-// import {
-//   forecastEngine,
-//   kelvinToFahrenheit,
-// } from './helpers/util.js';
 
 const { google } = googleapis;
 
@@ -44,13 +45,6 @@ const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 // created automatically when the authorization flow completes for the first
 // time.
 const TOKEN_PATH = 'token.json';
-
-// Load client secrets from a local file.
-fs.readFile('credentials.json', (err, content) => {
-  if (err) return console.log('Error loading client secret file:', err);
-  // Authorize a client with credentials, then call the Gmail API.
-  authorize(JSON.parse(content), listLabels);
-});
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -103,29 +97,6 @@ function getNewToken(oAuth2Client, callback) {
   });
 }
 
-/**
- * Lists the labels in the user's account.
- *
- * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
- */
-function listLabels(auth) {
-  const gmail = google.gmail({ version: 'v1', auth });
-  gmail.users.labels.list({
-    userId: 'me',
-  }, (err, res) => {
-    if (err) return console.log('The API returned an error: ' + err);
-    const labels = res.data.labels;
-    if (labels.length) {
-      console.log('Labels:');
-      labels.forEach((label) => {
-        console.log(`- ${label.name}`);
-      });
-    } else {
-      console.log('No labels found.');
-    }
-  });
-}
-
 // NOTE:
 // think about throttling so I don't hit my daily pull limit
 // websockets so that all connected monitors see the same image
@@ -157,8 +128,53 @@ app.get('/random-photo', (req, res) => {
 });
 
 app.get('/top-daily-report', (req, res) => {
-  // TODO: Grab 'Top Daily Report...' from connected gmail
-  res.send(req);
+  // // Load client secrets from a local file.
+  // fs.readFile('credentials.json', (err, content) => {
+  //   if (err) return console.log('Error loading client secret file:', err);
+  //   // Authorize a client with credentials, then call the Gmail API.
+  //   authorize(JSON.parse(content), getRecentEmail);
+  // });
+
+  // /**
+  //  * Get the recent email from your Gmail account
+  //  *
+  //  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+  //  */
+  // function getRecentEmail(auth) {
+  //   const gmail = google.gmail({ version: 'v1', auth });
+  //   const date = new Date();
+  //   // Ex: Jan
+  //   const month = date.toLocaleString('default', { month: 'short' });
+
+  //   gmail.users.messages.list({
+  //     userId: 'me',
+  //     maxResults: 1,
+  //     q: `Top Daily Reports For ${month}`,
+  //   }, function(err, response) {
+  //       if (err) {
+  //           console.log('The API returned an error: ' + err);
+  //           return;
+  //       }
+
+  //     // Get the message id which we will need to retreive tha actual message next.
+  //     var message_id = response['data']['messages'][0]['id'];
+
+  //     // Retreive the actual message using the message id
+  //     gmail.users.messages.get({auth: auth, userId: 'me', 'id': message_id}, function(err, response) {
+  //         if (err) {
+  //             console.log('The API returned an error: ' + err);
+  //             return;
+  //         }
+
+  //       // console.log(response['data']);
+  //       res.send(parseSnippet(response['data'].snippet));
+  //     });
+  //   });
+  // }
+
+  // NOTE: for testing with mock data
+  const snip = 'Top Daily Metrics ----------------- num_active_users_1d 122803 num_new_users_1d 169 num_messages_total_1d 9560 num_messages_urgent_total_1d 1467 num_messages_pager_total_1d 9521 num_threads_total_1d';
+  res.send(parseSnippet(snip));
 });
 
 app.get('/weather-report', (req, res) => {

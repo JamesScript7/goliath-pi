@@ -38,7 +38,7 @@ export default {
   left: 40%;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 2rem;
-  font-variant: petite-caps;
+  text-transform: uppercase;
   color: #fff;
 }
 
@@ -52,7 +52,7 @@ export default {
 .flex-column {
     display: flex;
     flex: 1;
-    height: 150px;
+    height: 200px;
     padding: 0 20px 0;
     background-color:rgba(8,8,8, 0.95);
 }

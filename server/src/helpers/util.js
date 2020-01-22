@@ -59,3 +59,19 @@ export function forecastEngine(forecast) {
 
   return result;
 }
+
+export function parseSnippet(str) {
+  const res = str.split(' ');
+  // NOTE: because snippet doesn't return last num
+  const resLength = res.length - 1;
+  const snippetObject = {};
+
+  res.forEach((item, i) => {
+    if (item.includes('num') && i !== resLength) {
+      const word = item.split('_');
+      snippetObject[`${word[1]}_${word[2]}`] = `${res[i + 1]}`;
+    }
+  });
+
+  return snippetObject;
+}

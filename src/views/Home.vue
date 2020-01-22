@@ -3,7 +3,7 @@
     <Wallpaper
       :imgUrl="imgUrl"
       :imgDescription="imgDescription" />
-    <!-- <CureatrDailyReport /> -->
+    <CureatrDailyReport :snippet="snippet" />
     <DateAndTime :moment="moment" />
     <WeatherReport
       :current="currentWeatherData"
@@ -20,7 +20,7 @@ import axios from 'axios';
 import moment from 'moment';
 // @ is an alias to /src
 import Wallpaper from '@/components/Wallpaper.vue';
-// import CureatrDailyReport from '@/components/CureatrDailyReport.vue';
+import CureatrDailyReport from '@/components/CureatrDailyReport.vue';
 import DateAndTime from '@/components/DateAndTime.vue';
 import WeatherReport from '@/components/WeatherReport.vue';
 
@@ -29,12 +29,13 @@ const THIRTY_MINUTES = (ONE_SECOND * 60) * 30;
 const PHOTO_REFRESH_INTERVAL = (ONE_SECOND * 60) * 5;
 const RANDOM_PHOTO_API_URL = 'http://localhost:4000/random-photo';
 const WEATHER_REPORT_API_URL = 'http://localhost:4000/weather-report';
+const TOP_DAILY_REPORT_URL = 'http://localhost:4000/top-daily-report';
 
 export default {
   name: 'home',
   components: {
     Wallpaper,
-    // CureatrDailyReport
+    CureatrDailyReport,
     DateAndTime,
     WeatherReport,
   },
@@ -42,6 +43,7 @@ export default {
     return {
       imgUrl: '',
       imgDescription: '',
+      snippet: {},
       moment: {
         day: moment().format('dddd'),
         monthAndDate: moment().format('MMM Do'),
@@ -66,6 +68,18 @@ export default {
           }
         }).catch((err) => {
           console.error('Axios unsplash error:', err);
+        });
+    },
+    grabCureatrDailyReport() {
+      axios.get(TOP_DAILY_REPORT_URL)
+        .then((response) => {
+          if (response.status === 200) {
+            this.snippet = response.data;
+          } else {
+            console.error('response', response);
+          }
+        }).catch((err) => {
+          console.error('Axios gmailapi error:', err);
         });
     },
     grabWeatherReport() {
@@ -106,6 +120,7 @@ export default {
   },
   created() {
     this.grabRandomPhoto();
+    this.grabCureatrDailyReport();
     this.grabWeatherReport();
 
     // timers
