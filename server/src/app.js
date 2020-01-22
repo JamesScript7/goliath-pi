@@ -10,10 +10,10 @@ import {
 } from './helpers/util.js';
 
 // NOTE: for testing with mock data
-// import {
-//   currentData,
-//   forecastData,
-// } from './helpers/factory.js';
+import {
+  currentData,
+  forecastData,
+} from './helpers/factory.js';
 
 dotenv.config();
 global.fetch = fetch;
@@ -42,24 +42,24 @@ app.get('/', (req, res) => {
 });
 
 app.get('/random-photo', (req, res) => {
-  const query = {
-    query: 'nature',
-  };
+  // const query = {
+  //   query: 'nature',
+  // };
 
-  unsplash.photos.getRandomPhoto(query)
-    .then(Unsplash.toJson).then((json) => {
-      res.send(json);
-    }).catch((err) => {
-      res.send(err);
-    });
+  // unsplash.photos.getRandomPhoto(query)
+  //   .then(Unsplash.toJson).then((json) => {
+  //     res.send(json);
+  //   }).catch((err) => {
+  //     res.send(err);
+  //   });
 
   // NOTE: for testing with mock data
-  // const TEST_URL_FOR_RANDOM_PHOTO = 'https://source.unsplash.com/random/2048x1536';
-  // res.send({
-  //   alt_description: 'alt description example',
-  //   description: 'description example',
-  //   urls: { full: TEST_URL_FOR_RANDOM_PHOTO },
-  // });
+  const TEST_URL_FOR_RANDOM_PHOTO = 'https://source.unsplash.com/random/2048x1536';
+  res.send({
+    alt_description: 'alt description example',
+    description: 'description example',
+    urls: { full: TEST_URL_FOR_RANDOM_PHOTO },
+  });
 });
 
 app.get('/top-daily-report', (req, res) => {
@@ -68,35 +68,35 @@ app.get('/top-daily-report', (req, res) => {
 });
 
 app.get('/weather-report', (req, res) => {
-  const zipCode = '10013';
-  const key = process.env.WEATHER_API_KEY;
-  const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&APPID=${key}`;
-  const FiveDayforcastWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?zip=${zipCode},us&APPID=${key}`;
-  const currentData = {};
+  // const zipCode = '10013';
+  // const key = process.env.WEATHER_API_KEY;
+  // const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&APPID=${key}`;
+  // const FiveDayforcastWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?zip=${zipCode},us&APPID=${key}`;
+  // const currentData = {};
 
-  fetch(currentWeatherUrl)
-    .then(result => result.text())
-    .then((currentBody) => {
-      const current = JSON.parse(currentBody);
+  // fetch(currentWeatherUrl)
+  //   .then(result => result.text())
+  //   .then((currentBody) => {
+  //     const current = JSON.parse(currentBody);
 
-      currentData.temp = kelvinToFahrenheit(current.main.temp);
-      currentData.temp_min = kelvinToFahrenheit(current.main.temp_min);
-      currentData.temp_max = kelvinToFahrenheit(current.main.temp_max);
-      currentData.description = current.weather[0].description;
-      currentData.icon = `https://openweathermap.org/img/w/${current.weather[0].icon}.png`;
+  //     currentData.temp = kelvinToFahrenheit(current.main.temp);
+  //     currentData.temp_min = kelvinToFahrenheit(current.main.temp_min);
+  //     currentData.temp_max = kelvinToFahrenheit(current.main.temp_max);
+  //     currentData.description = current.weather[0].description;
+  //     currentData.icon = `https://openweathermap.org/img/w/${current.weather[0].icon}.png`;
 
-      fetch(FiveDayforcastWeatherUrl)
-        .then(result => result.text())
-        .then((forecastBody) => {
-          const forecast = JSON.parse(forecastBody);
-          const forecastData = forecastEngine(forecast);
+  //     fetch(FiveDayforcastWeatherUrl)
+  //       .then(result => result.text())
+  //       .then((forecastBody) => {
+  //         const forecast = JSON.parse(forecastBody);
+  //         const forecastData = forecastEngine(forecast);
 
-          res.send({ currentData, forecastData });
-        });
-    });
+  //         res.send({ currentData, forecastData });
+  //       });
+  //   });
 
   // NOTE: for testing with mock data
-  // res.send({ currentData, forecastData });
+  res.send({ currentData, forecastData });
 });
 
 app.listen(4000, () => {

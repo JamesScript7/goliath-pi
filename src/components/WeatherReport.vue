@@ -17,9 +17,9 @@
     </div>
     <div class="weatherreport__forecast">
       <div class="weatherreport__days" v-for="(item, index) in forecast" :key="index">
-        <div>{{ item.day }}</div>
+        <div class="days__day">{{ item.day }}</div>
         <img :alt="item.description" :src="item.icon" />
-        <div>{{ item.min }}/{{ item.max }}</div>
+        <div class="days__minmax">{{ item.min }} / {{ item.max }}</div>
         <div class="days__description">{{ item.description }}</div>
       </div>
     </div>
@@ -62,7 +62,8 @@ export default {
 }
 
 .current__temp {
-  font-size: 4.5rem;
+  font-size: 5rem;
+  font-weight: bold;
 }
 
 .current__temp::after {
@@ -73,6 +74,7 @@ export default {
 
 .current__left {
   flex: 1;
+  font-size: 1.5em;
   display: flex;
   align-items: flex-end;
 }
@@ -106,6 +108,11 @@ export default {
 .weatherreport__days {
   flex-grow: 1;
   border-left: 1px solid #555;
+}
+
+.days__day,
+.days__minmax {
+    font-size: 1.5em;
 }
 
 .days__description {

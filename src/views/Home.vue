@@ -109,9 +109,9 @@ export default {
     this.grabWeatherReport();
 
     // timers
-    this.updatePhoto();
-    this.updateTime();
-    this.updateWeather();
+    // this.updatePhoto();
+    // this.updateTime();
+    // this.updateWeather();
   },
   destroyed() {
     clearInterval(this.updatePhoto);

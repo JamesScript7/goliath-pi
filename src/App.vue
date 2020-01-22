@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <img alt="company-logo" src="./assets/logo.png" class="company-logo" />
+      <div class="company-logo">
+        <img alt="company-logo" src="./assets/logo.png" />
+      </div>
     <router-view/>
   </div>
 </template>
@@ -25,8 +27,14 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 15rem;
-    margin: 2rem;
+    width: 35%;
+    padding: 1.5rem;
+    text-align: left;
+    background: linear-gradient(to right, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
     z-index: 1;
+}
+
+.company-logo img {
+    width: 18rem;
 }
 </style>
