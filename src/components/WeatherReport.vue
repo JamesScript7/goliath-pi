@@ -27,12 +27,12 @@
 </template>
 
 // Template:
-// ---------------------------------------------------------------------
-// |  Today                         |  Tues    | Wed       | Thurs     |
-// |                                |  [icon]  | [icon]    | [icon]    |
-// |  [ 63 ]      [icon] clear sky  |  60/52   | 63/51     | 78/53     |
-// |  [    ]52/65                   |  cloudy  | overcast  | clear sky |
-// ---------------------------------------------------------------------
+// -----------------------------------------------------------------------
+// |  Today                           |  Tues    | Wed       | Thurs     |
+// |  [    ]       [    ] [         ] |  [icon]  | [icon]    | [icon]    |
+// |  [ 63 ]       [icon] [clear sky] |  60/52   | 63/51     | 78/53     |
+// |  [    ]52/65                     |  cloudy  | overcast  | clear sky |
+// -----------------------------------------------------------------------
 
 <script>
 export default {
@@ -68,7 +68,7 @@ export default {
 
 .current__temp::after {
   content: '\2109';
-  font-size: 1rem;
+  font-size: 1.2rem;
   vertical-align: text-top;
 }
 
@@ -87,7 +87,7 @@ export default {
 }
 
 .current__minmax {
-  line-height: 2.5rem;
+  line-height: 3.5rem;
 }
 
 .current__icon {

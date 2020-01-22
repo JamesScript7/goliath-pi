@@ -55,5 +55,7 @@ export function forecastEngine(forecast) {
     }
   });
 
+  result.shift();
+
   return result;
 }
