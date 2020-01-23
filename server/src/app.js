@@ -5,19 +5,19 @@ import fetch from 'node-fetch';
 import fs from 'file-system';
 import readline from 'readline';
 import googleapis from 'googleapis';
-// import Unsplash from 'unsplash-js';
+import Unsplash from 'unsplash-js';
 
 import {
   parseSnippet,
-  // forecastEngine,
-  // kelvinToFahrenheit,
+  forecastEngine,
+  kelvinToFahrenheit,
 } from './helpers/util.js';
 
-// NOTE: for testing with mock data
 import {
-  joke,
-  currentData,
-  forecastData,
+  mockJoke,
+  mockSnippet,
+  mockCurrentData,
+  mockForecastData,
 } from './helpers/factory.js';
 
 const { google } = googleapis;
@@ -30,15 +30,15 @@ const allowCrossDomain = (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
-  // res.header('X-JokesOne-Api-Secret', process.env.JOKE_API_KEY);
+  res.header('X-JokesOne-Api-Secret', process.env.JOKE_API_KEY);
   next();
 };
 app.use(allowCrossDomain);
 
-// const unsplash = new Unsplash.default({
-//   accessKey: process.env.UNSPLASH_ACCESS_KEY,
-//   secret: process.env.UNSPLASH_SECRET_KEY,
-// });
+const unsplash = new Unsplash.default({
+  accessKey: process.env.UNSPLASH_ACCESS_KEY,
+  secret: process.env.UNSPLASH_SECRET_KEY,
+});
 
 // GMAIL API
 // If modifying these scopes, delete token.json.
@@ -99,134 +99,153 @@ function getNewToken(oAuth2Client, callback) {
   });
 }
 
-// NOTE:
-// think about throttling so I don't hit my daily pull limit
-// websockets so that all connected monitors see the same image
-// some error handling would be nice
-
 app.get('/', (req, res) => {
   res.send('Hey ;)');
 });
 
 app.get('/joke', (req, res) => {
-  // fetch('https://api.jokes.one/jod')
-  //   .then(result => result.text())
-  //   .then((currentBody) => {
-  //     res.send(currentBody);
-  //   }).catch((err) => {
-  //     res.send(err);
-  //   });
-  res.send(joke);
+  fetch('https://api.jokes.one/jod')
+    .then(result => result.text())
+    .then((currentBody) => {
+      res.send(currentBody);
+    }).catch((err) => {
+      console.log('Joke API returned an error:', err);
+
+      // fallback
+      res.send(mockJoke);
+    });
+
+  // NOTE: for testing with mock data
+  res.send(mockJoke);
 });
 
 app.get('/random-photo', (req, res) => {
-  // const query = {
-  //   query: 'nature',
-  // };
+  const FALLBACK_URL_FOR_RANDOM_PHOTO = 'https://source.unsplash.com/random/2048x1536';
+  const query = {
+    query: 'nature',
+  };
 
-  // unsplash.photos.getRandomPhoto(query)
-  //   .then(Unsplash.toJson).then((json) => {
-  //     res.send(json);
-  //   }).catch((err) => {
-  //     // res.send(err);
-  //     // NOTE: fallback
-  //     const TEST_URL_FOR_RANDOM_PHOTO = 'https://source.unsplash.com/random/2048x1536';
-  //     res.send({
-  //       alt_description: 'alt description example',
-  //       description: 'description example',
-  //       urls: { full: TEST_URL_FOR_RANDOM_PHOTO },
-  //     });
-  // });
-  const TEST_URL_FOR_RANDOM_PHOTO = 'https://source.unsplash.com/random/2048x1536';
-  res.send({
-    alt_description: 'alt description example',
-    description: 'description example',
-    urls: { full: TEST_URL_FOR_RANDOM_PHOTO },
+  unsplash.photos.getRandomPhoto(query)
+    .then(Unsplash.toJson).then((json) => {
+      res.send(json);
+    }).catch((err) => {
+      console.log('Unsplash API returned an error:', err);
+
+      // fallback
+      res.send({
+        alt_description: 'alt description example',
+        description: 'description example',
+        urls: { full: FALLBACK_URL_FOR_RANDOM_PHOTO },
+      });
   });
+
+  // NOTE: for testing with mock data
+  // res.send({
+  //   alt_description: 'alt description example',
+  //   description: 'description example',
+  //   urls: { full: FALLBACK_URL_FOR_RANDOM_PHOTO },
+  // });
 });
 
 app.get('/top-daily-report', (req, res) => {
-  // // Load client secrets from a local file.
-  // fs.readFile('credentials.json', (err, content) => {
-  //   if (err) return console.log('Error loading client secret file:', err);
-  //   // Authorize a client with credentials, then call the Gmail API.
-  //   authorize(JSON.parse(content), getRecentEmail);
-  // });
+  // Load client secrets from a local file.
+  fs.readFile('credentials.json', (err, content) => {
+    if (err) return console.log('Error loading client secret file:', err);
+    // Authorize a client with credentials, then call the Gmail API.
+    authorize(JSON.parse(content), getRecentEmail);
+  });
 
-  // /**
-  //  * Get the recent email from your Gmail account
-  //  *
-  //  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
-  //  */
-  // function getRecentEmail(auth) {
-  //   const gmail = google.gmail({ version: 'v1', auth });
-  //   const date = new Date();
-  //   // Ex: Jan
-  //   const month = date.toLocaleString('default', { month: 'short' });
+  /**
+   * Get the recent email from your Gmail account
+   *
+   * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+   */
+  function getRecentEmail(auth) {
+    const gmail = google.gmail({ version: 'v1', auth });
+    const date = new Date();
+    // Ex: Jan
+    const month = date.toLocaleString('default', { month: 'short' });
 
-  //   gmail.users.messages.list({
-  //     userId: 'me',
-  //     maxResults: 1,
-  //     q: `Top Daily Reports For ${month}`,
-  //   }, function(err, response) {
-  //       if (err) {
-  //           console.log('The API returned an error: ' + err);
-  //           return;
-  //       }
+    gmail.users.messages.list({
+      userId: 'me',
+      maxResults: 1,
+      q: `Top Daily Reports For ${month}`,
+    }, function(err, response) {
+        if (err) {
+            console.log('Gmail API returned an error: ' + err);
 
-  //     // Get the message id which we will need to retreive tha actual message next.
-  //     var message_id = response['data']['messages'][0]['id'];
+            // fallback
+            res.send(parseSnippet(mockSnippet));
+            return;
+        }
 
-  //     // Retreive the actual message using the message id
-  //     gmail.users.messages.get({auth: auth, userId: 'me', 'id': message_id}, function(err, response) {
-  //         if (err) {
-  //             console.log('The API returned an error: ' + err);
-  //             return;
-  //         }
+      // Get the message id which we will need to retreive tha actual message next.
+      var message_id = response['data']['messages'][0]['id'];
 
-  //       // console.log(response['data']);
-  //       res.send(parseSnippet(response['data'].snippet));
-  //     });
-  //   });
-  // }
+      // Retreive the actual message using the message id
+      gmail.users.messages.get({auth: auth, userId: 'me', 'id': message_id}, function(err, response) {
+          if (err) {
+              console.log('The API returned an error: ' + err);
+              return;
+          }
+
+        // console.log(response['data']);
+        res.send(parseSnippet(response['data'].snippet));
+      });
+    });
+  }
 
   // NOTE: for testing with mock data
-  const snip = 'Top Daily Metrics ----------------- num_active_users_1d 122803 num_new_users_1d 169 num_messages_total_1d 9560 num_messages_urgent_total_1d 1467 num_messages_pager_total_1d 9521 num_threads_total_1d';
-  res.send(parseSnippet(snip));
+  // res.send(parseSnippet(mockSnippet));
 });
 
 app.get('/weather-report', (req, res) => {
-  // const zipCode = '10013';
-  // const key = process.env.WEATHER_API_KEY;
-  // const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&APPID=${key}`;
-  // const FiveDayforcastWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?zip=${zipCode},us&APPID=${key}`;
-  // const currentData = {};
+  const zipCode = '10013';
+  const key = process.env.WEATHER_API_KEY;
+  const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&APPID=${key}`;
+  const FiveDayforcastWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?zip=${zipCode},us&APPID=${key}`;
+  const currentData = {};
 
-  // fetch(currentWeatherUrl)
-  //   .then(result => result.text())
-  //   .then((currentBody) => {
-  //     const current = JSON.parse(currentBody);
+  fetch(currentWeatherUrl)
+    .then(result => result.text())
+    .then((currentBody) => {
+      const current = JSON.parse(currentBody);
 
-  //     currentData.temp = kelvinToFahrenheit(current.main.temp);
-  //     currentData.temp_min = kelvinToFahrenheit(current.main.temp_min);
-  //     currentData.temp_max = kelvinToFahrenheit(current.main.temp_max);
-  //     currentData.description = current.weather[0].description;
-  //     currentData.icon = `https://openweathermap.org/img/w/${current.weather[0].icon}.png`;
+      currentData.temp = kelvinToFahrenheit(current.main.temp);
+      currentData.temp_min = kelvinToFahrenheit(current.main.temp_min);
+      currentData.temp_max = kelvinToFahrenheit(current.main.temp_max);
+      currentData.description = current.weather[0].description;
+      currentData.icon = `https://openweathermap.org/img/w/${current.weather[0].icon}.png`;
 
-  //     fetch(FiveDayforcastWeatherUrl)
-  //       .then(result => result.text())
-  //       .then((forecastBody) => {
-  //         const forecast = JSON.parse(forecastBody);
-  //         const forecastData = forecastEngine(forecast);
+      fetch(FiveDayforcastWeatherUrl)
+        .then(result => result.text())
+        .then((forecastBody) => {
+          const forecast = JSON.parse(forecastBody);
+          const forecastData = forecastEngine(forecast);
 
-  //         res.send({ currentData, forecastData });
-  //       });
-  //   });
+          res.send({ currentData, forecastData });
+        });
+    }).catch((err) => {
+      console.log('Openweathermap returned an error:', err);
 
-  // NOTE: for testing with mock data
-  res.send({ currentData, forecastData });
+      // fallback
+      res.send({
+        currentData: mockCurrentData,
+        forecastData: mockForecastData,
+      });
+    });
+
+    // NOTE: for testing with mock data
+    // res.send({
+    //   currentData: mockCurrentData,
+    //   forecastData: mockForecastData,
+    // });
 });
 
 app.listen(4000, () => {
   console.log('Cureatr Dashboard Listening!');
 });
+
+// NOTE:
+// think about throttling so I don't hit my daily pull limit?
+// websockets so that all connected monitors see the same image

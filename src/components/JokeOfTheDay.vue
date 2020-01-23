@@ -1,6 +1,6 @@
 <template>
   <div class="jokeoftheday">
-      <div class="lamejoke">
+      <div class="lamejoke --hide">
         {{ joke }}
       </div>
   </div>
@@ -16,9 +16,13 @@ export default {
 </script>
 
 <style scoped>
+.--hide {
+    display: none;
+}
+
 .jokeoftheday {
     position: fixed;
-    font-size: 8rem;
+    font-size: 7rem;
     height: 100%;
     color: #fff;
     background-color: black;

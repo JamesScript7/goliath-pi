@@ -1,5 +1,5 @@
 // WEATHER REPORT
-export const currentData = {
+export const mockCurrentData = {
   temp: 28,
   temp_min: 23,
   temp_max: 31,
@@ -7,7 +7,7 @@ export const currentData = {
   icon: 'https://openweathermap.org/img/w/01n.png',
 };
 
-export const forecastData = [{
+export const mockForecastData = [{
   temp: [
     27,
     28,
@@ -92,7 +92,8 @@ export const forecastData = [{
   max: 43,
 }];
 
-export const joke = {
+// JOKE OF THE DAY
+export const mockJoke = {
   success: {
     total: 1,
   },
@@ -117,3 +118,6 @@ export const joke = {
     copyright: '2019-20 https://jokes.one',
   },
 };
+
+// TOP DAILY REPORT
+export const mockSnippet = 'Top Daily Metrics ----------------- num_active_users_1d 122803 num_new_users_1d 169 num_messages_total_1d 9560 num_messages_urgent_total_1d 1467 num_messages_pager_total_1d 9521 num_threads_total_1d';
