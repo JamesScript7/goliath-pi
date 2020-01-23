@@ -104,16 +104,16 @@ app.get('/', (req, res) => {
 });
 
 app.get('/joke', (req, res) => {
-  fetch('https://api.jokes.one/jod')
-    .then(result => result.text())
-    .then((currentBody) => {
-      res.send(currentBody);
-    }).catch((err) => {
-      console.log('Joke API returned an error:', err);
+  // fetch('https://api.jokes.one/jod')
+  //   .then(result => result.text())
+  //   .then((currentBody) => {
+  //     res.send(currentBody);
+  //   }).catch((err) => {
+  //     console.log('Joke API returned an error:', err);
 
-      // fallback
-      res.send(mockJoke);
-    });
+  //     // fallback
+  //     res.send(mockJoke);
+  //   });
 
   // NOTE: for testing with mock data
   res.send(mockJoke);
@@ -121,125 +121,125 @@ app.get('/joke', (req, res) => {
 
 app.get('/random-photo', (req, res) => {
   const FALLBACK_URL_FOR_RANDOM_PHOTO = 'https://source.unsplash.com/random/2048x1536';
-  const query = {
-    query: 'nature',
-  };
+  // const query = {
+  //   query: 'nature',
+  // };
 
-  unsplash.photos.getRandomPhoto(query)
-    .then(Unsplash.toJson).then((json) => {
-      res.send(json);
-    }).catch((err) => {
-      console.log('Unsplash API returned an error:', err);
+  // unsplash.photos.getRandomPhoto(query)
+  //   .then(Unsplash.toJson).then((json) => {
+  //     res.send(json);
+  //   }).catch((err) => {
+  //     console.log('Unsplash API returned an error:', err);
 
-      // fallback
-      res.send({
-        alt_description: 'alt description example',
-        description: 'description example',
-        urls: { full: FALLBACK_URL_FOR_RANDOM_PHOTO },
-      });
-  });
+  //     // fallback
+  //     res.send({
+  //       alt_description: 'alt description example',
+  //       description: 'description example',
+  //       urls: { full: FALLBACK_URL_FOR_RANDOM_PHOTO },
+  //     });
+  // });
 
   // NOTE: for testing with mock data
-  // res.send({
-  //   alt_description: 'alt description example',
-  //   description: 'description example',
-  //   urls: { full: FALLBACK_URL_FOR_RANDOM_PHOTO },
-  // });
+  res.send({
+    alt_description: 'alt description example',
+    description: 'description example',
+    urls: { full: FALLBACK_URL_FOR_RANDOM_PHOTO },
+  });
 });
 
 app.get('/top-daily-report', (req, res) => {
-  // Load client secrets from a local file.
-  fs.readFile('credentials.json', (err, content) => {
-    if (err) return console.log('Error loading client secret file:', err);
-    // Authorize a client with credentials, then call the Gmail API.
-    authorize(JSON.parse(content), getRecentEmail);
-  });
+  // // Load client secrets from a local file.
+  // fs.readFile('credentials.json', (err, content) => {
+  //   if (err) return console.log('Error loading client secret file:', err);
+  //   // Authorize a client with credentials, then call the Gmail API.
+  //   authorize(JSON.parse(content), getRecentEmail);
+  // });
 
-  /**
-   * Get the recent email from your Gmail account
-   *
-   * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
-   */
-  function getRecentEmail(auth) {
-    const gmail = google.gmail({ version: 'v1', auth });
-    const date = new Date();
-    // Ex: Jan
-    const month = date.toLocaleString('default', { month: 'short' });
+  // /**
+  //  * Get the recent email from your Gmail account
+  //  *
+  //  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+  //  */
+  // function getRecentEmail(auth) {
+  //   const gmail = google.gmail({ version: 'v1', auth });
+  //   const date = new Date();
+  //   // Ex: Jan
+  //   const month = date.toLocaleString('default', { month: 'short' });
 
-    gmail.users.messages.list({
-      userId: 'me',
-      maxResults: 1,
-      q: `Top Daily Reports For ${month}`,
-    }, function(err, response) {
-        if (err) {
-            console.log('Gmail API returned an error: ' + err);
+  //   gmail.users.messages.list({
+  //     userId: 'me',
+  //     maxResults: 1,
+  //     q: `Top Daily Reports For ${month}`,
+  //   }, function(err, response) {
+  //       if (err) {
+  //           console.log('Gmail API returned an error: ' + err);
 
-            // fallback
-            res.send(parseSnippet(mockSnippet));
-            return;
-        }
+  //           // fallback
+  //           res.send(parseSnippet(mockSnippet));
+  //           return;
+  //       }
 
-      // Get the message id which we will need to retreive tha actual message next.
-      var message_id = response['data']['messages'][0]['id'];
+  //     // Get the message id which we will need to retreive tha actual message next.
+  //     var message_id = response['data']['messages'][0]['id'];
 
-      // Retreive the actual message using the message id
-      gmail.users.messages.get({auth: auth, userId: 'me', 'id': message_id}, function(err, response) {
-          if (err) {
-              console.log('The API returned an error: ' + err);
-              return;
-          }
+  //     // Retreive the actual message using the message id
+  //     gmail.users.messages.get({auth: auth, userId: 'me', 'id': message_id}, function(err, response) {
+  //         if (err) {
+  //             console.log('The API returned an error: ' + err);
+  //             return;
+  //         }
 
-        // console.log(response['data']);
-        res.send(parseSnippet(response['data'].snippet));
-      });
-    });
-  }
+  //       // console.log(response['data']);
+  //       res.send(parseSnippet(response['data'].snippet));
+  //     });
+  //   });
+  // }
 
   // NOTE: for testing with mock data
-  // res.send(parseSnippet(mockSnippet));
+  res.send(parseSnippet(mockSnippet));
 });
 
 app.get('/weather-report', (req, res) => {
-  const zipCode = '10013';
-  const key = process.env.WEATHER_API_KEY;
-  const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&APPID=${key}`;
-  const FiveDayforcastWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?zip=${zipCode},us&APPID=${key}`;
-  const currentData = {};
+  // const zipCode = '10013';
+  // const key = process.env.WEATHER_API_KEY;
+  // const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&APPID=${key}`;
+  // const FiveDayforcastWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?zip=${zipCode},us&APPID=${key}`;
+  // const currentData = {};
 
-  fetch(currentWeatherUrl)
-    .then(result => result.text())
-    .then((currentBody) => {
-      const current = JSON.parse(currentBody);
+  // fetch(currentWeatherUrl)
+  //   .then(result => result.text())
+  //   .then((currentBody) => {
+  //     const current = JSON.parse(currentBody);
 
-      currentData.temp = kelvinToFahrenheit(current.main.temp);
-      currentData.temp_min = kelvinToFahrenheit(current.main.temp_min);
-      currentData.temp_max = kelvinToFahrenheit(current.main.temp_max);
-      currentData.description = current.weather[0].description;
-      currentData.icon = `https://openweathermap.org/img/w/${current.weather[0].icon}.png`;
+  //     currentData.temp = kelvinToFahrenheit(current.main.temp);
+  //     currentData.temp_min = kelvinToFahrenheit(current.main.temp_min);
+  //     currentData.temp_max = kelvinToFahrenheit(current.main.temp_max);
+  //     currentData.description = current.weather[0].description;
+  //     currentData.icon = `https://openweathermap.org/img/w/${current.weather[0].icon}.png`;
 
-      fetch(FiveDayforcastWeatherUrl)
-        .then(result => result.text())
-        .then((forecastBody) => {
-          const forecast = JSON.parse(forecastBody);
-          const forecastData = forecastEngine(forecast);
+  //     fetch(FiveDayforcastWeatherUrl)
+  //       .then(result => result.text())
+  //       .then((forecastBody) => {
+  //         const forecast = JSON.parse(forecastBody);
+  //         const forecastData = forecastEngine(forecast);
 
-          res.send({ currentData, forecastData });
-        });
-    }).catch((err) => {
-      console.log('Openweathermap returned an error:', err);
+  //         res.send({ currentData, forecastData });
+  //       });
+  //   }).catch((err) => {
+  //     console.log('Openweathermap returned an error:', err);
 
-      // fallback
-      res.send({
-        currentData: mockCurrentData,
-        forecastData: mockForecastData,
-      });
-    });
+  //     // fallback
+  //     res.send({
+  //       currentData: mockCurrentData,
+  //       forecastData: mockForecastData,
+  //     });
+  //   });
 
     // NOTE: for testing with mock data
-    // res.send({
-    //   currentData: mockCurrentData,
-    //   forecastData: mockForecastData,
-    // });
+    res.send({
+      currentData: mockCurrentData,
+      forecastData: mockForecastData,
+    });
 });
 
 app.listen(4000, () => {

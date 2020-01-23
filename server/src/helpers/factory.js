@@ -112,7 +112,7 @@ export const mockJoke = {
         racial: '0',
         date: '2020-01-23',
         id: 'r6Bddl1Y2RXcVy0Lr2bDBAeF',
-        text: "Knock Knock Who's there? Cozy! Cozy who? Cozy who's knocking!",
+        text: 'I ate a clock yesterday, it was very time-consuming.',
       },
     }],
     copyright: '2019-20 https://jokes.one',

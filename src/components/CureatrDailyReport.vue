@@ -51,7 +51,6 @@ li {
   background: #fff;
   border-radius: 10px;
   text-align: left;
-  box-shadow: 3px -3px 4px 0px;
 }
 
 .cureatrdailyreport__report {
