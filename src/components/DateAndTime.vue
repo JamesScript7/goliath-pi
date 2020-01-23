@@ -35,7 +35,7 @@ export default {
 .dateandtime {
   position: absolute;
   height: 100%;
-  left: 40%;
+  left: 30%;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 2rem;
   text-transform: uppercase;

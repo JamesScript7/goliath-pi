@@ -9,11 +9,9 @@
       :current="currentWeatherData"
       :forecast="forecastWeatherData"
       />
+    <JokeOfTheDay :joke="joke" />
   </div>
 </template>
-
-// TODO:
-// gmail api omg
 
 <script>
 import axios from 'axios';
@@ -23,13 +21,23 @@ import Wallpaper from '@/components/Wallpaper.vue';
 import CureatrDailyReport from '@/components/CureatrDailyReport.vue';
 import DateAndTime from '@/components/DateAndTime.vue';
 import WeatherReport from '@/components/WeatherReport.vue';
+import JokeOfTheDay from '@/components/JokeOfTheDay.vue';
 
 const ONE_SECOND = 1000;
 const THIRTY_MINUTES = (ONE_SECOND * 60) * 30;
 const PHOTO_REFRESH_INTERVAL = (ONE_SECOND * 60) * 5;
+
+// LOCALHOST
 const RANDOM_PHOTO_API_URL = 'http://localhost:4000/random-photo';
 const WEATHER_REPORT_API_URL = 'http://localhost:4000/weather-report';
 const TOP_DAILY_REPORT_URL = 'http://localhost:4000/top-daily-report';
+const JOKE_URL = 'http://localhost:4000/joke';
+
+// NETWORK
+// const RANDOM_PHOTO_API_URL = 'http://10.3.0.73:4000/random-photo';
+// const WEATHER_REPORT_API_URL = 'http://10.3.0.73:4000/weather-report';
+// const TOP_DAILY_REPORT_URL = 'http://10.3.0.73:4000/top-daily-report';
+// const JOKE_URL = 'http://10.3.0.73:4000/joke';
 
 export default {
   name: 'home',
@@ -38,11 +46,13 @@ export default {
     CureatrDailyReport,
     DateAndTime,
     WeatherReport,
+    JokeOfTheDay,
   },
   data() {
     return {
       imgUrl: '',
       imgDescription: '',
+      joke: '',
       snippet: {},
       moment: {
         day: moment().format('dddd'),
@@ -55,6 +65,18 @@ export default {
     };
   },
   methods: {
+    grabJoke() {
+      axios.get(JOKE_URL)
+        .then((response) => {
+          if (response.status === 200) {
+            this.joke = response.data.contents.jokes[0].joke.text;
+          } else {
+            console.error('response:', response);
+          }
+        }).catch((err) => {
+          console.error('Axios unsplash error:', err);
+        });
+    },
     grabRandomPhoto() {
       axios.get(RANDOM_PHOTO_API_URL)
         .then((response) => {
@@ -119,6 +141,7 @@ export default {
     },
   },
   created() {
+    this.grabJoke();
     this.grabRandomPhoto();
     this.grabCureatrDailyReport();
     this.grabWeatherReport();

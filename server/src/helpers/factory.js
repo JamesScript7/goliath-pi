@@ -91,3 +91,29 @@ export const forecastData = [{
   min: 39,
   max: 43,
 }];
+
+export const joke = {
+  success: {
+    total: 1,
+  },
+  contents: {
+    jokes: [{
+      description: 'Joke of the day ',
+      language: 'en',
+      background: '',
+      category: 'jod',
+      date: '2020-01-23',
+      joke: {
+        title: 'Knock Knock - Cozy who?',
+        lang: 'en',
+        length: '69',
+        clean: '1',
+        racial: '0',
+        date: '2020-01-23',
+        id: 'r6Bddl1Y2RXcVy0Lr2bDBAeF',
+        text: "Knock Knock Who's there? Cozy! Cozy who? Cozy who's knocking!",
+      },
+    }],
+    copyright: '2019-20 https://jokes.one',
+  },
+};

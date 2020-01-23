@@ -15,6 +15,7 @@ import {
 
 // NOTE: for testing with mock data
 import {
+  joke,
   currentData,
   forecastData,
 } from './helpers/factory.js';
@@ -29,6 +30,7 @@ const allowCrossDomain = (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
+  // res.header('X-JokesOne-Api-Secret', process.env.JOKE_API_KEY);
   next();
 };
 app.use(allowCrossDomain);
@@ -103,7 +105,18 @@ function getNewToken(oAuth2Client, callback) {
 // some error handling would be nice
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Hey ;)');
+});
+
+app.get('/joke', (req, res) => {
+  // fetch('https://api.jokes.one/jod')
+  //   .then(result => result.text())
+  //   .then((currentBody) => {
+  //     res.send(currentBody);
+  //   }).catch((err) => {
+  //     res.send(err);
+  //   });
+  res.send(joke);
 });
 
 app.get('/random-photo', (req, res) => {
@@ -115,10 +128,15 @@ app.get('/random-photo', (req, res) => {
   //   .then(Unsplash.toJson).then((json) => {
   //     res.send(json);
   //   }).catch((err) => {
-  //     res.send(err);
-  //   });
-
-  // NOTE: for testing with mock data
+  //     // res.send(err);
+  //     // NOTE: fallback
+  //     const TEST_URL_FOR_RANDOM_PHOTO = 'https://source.unsplash.com/random/2048x1536';
+  //     res.send({
+  //       alt_description: 'alt description example',
+  //       description: 'description example',
+  //       urls: { full: TEST_URL_FOR_RANDOM_PHOTO },
+  //     });
+  // });
   const TEST_URL_FOR_RANDOM_PHOTO = 'https://source.unsplash.com/random/2048x1536';
   res.send({
     alt_description: 'alt description example',
@@ -210,5 +228,5 @@ app.get('/weather-report', (req, res) => {
 });
 
 app.listen(4000, () => {
-  console.log('Example app listening!');
+  console.log('Cureatr Dashboard Listening!');
 });

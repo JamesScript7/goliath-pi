@@ -36,7 +36,7 @@ li {
     position: fixed;
     top: 0;
     left: 0;
-    width: 35%;
+    width: 40%;
     padding: 1.5rem;
     text-align: left;
     background: linear-gradient(to right, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
