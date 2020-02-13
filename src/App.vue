@@ -1,14 +1,29 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+      <div class="company-logo">
+        <img alt="company-logo" src="./assets/logo.png" />
+      </div>
     <router-view/>
   </div>
 </template>
 
 <style>
+html,
+body {
+    margin: 0;
+    height: 100%;
+    background-color: black;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -17,16 +32,18 @@
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
+.company-logo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 40%;
+    padding: 1.5rem;
+    text-align: left;
+    background: linear-gradient(to right, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
+    z-index: 1;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.company-logo img {
+    width: 18rem;
 }
 </style>
