@@ -30,16 +30,16 @@ const THIRTY_MINUTES = (ONE_SECOND * 60) * 30;
 const ONE_HOUR = (ONE_SECOND * 60) * 60;
 
 // LOCALHOST
-// const RANDOM_PHOTO_API_URL = 'http://localhost:4000/random-photo';
-// const WEATHER_REPORT_API_URL = 'http://localhost:4000/weather-report';
-// const TOP_DAILY_REPORT_URL = 'http://localhost:4000/top-daily-report';
-// const JOKE_URL = 'http://localhost:4000/joke';
+const RANDOM_PHOTO_API_URL = 'http://localhost:4000/random-photo';
+const WEATHER_REPORT_API_URL = 'http://localhost:4000/weather-report';
+const TOP_DAILY_REPORT_URL = 'http://localhost:4000/top-daily-report';
+const JOKE_URL = 'http://localhost:4000/joke';
 
 // NETWORK
-const RANDOM_PHOTO_API_URL = 'http://10.3.0.73:4000/random-photo';
-const WEATHER_REPORT_API_URL = 'http://10.3.0.73:4000/weather-report';
-const TOP_DAILY_REPORT_URL = 'http://10.3.0.73:4000/top-daily-report';
-const JOKE_URL = 'http://10.3.0.73:4000/joke';
+// const RANDOM_PHOTO_API_URL = 'http://10.3.0.73:4000/random-photo';
+// const WEATHER_REPORT_API_URL = 'http://10.3.0.73:4000/weather-report';
+// const TOP_DAILY_REPORT_URL = 'http://10.3.0.73:4000/top-daily-report';
+// const JOKE_URL = 'http://10.3.0.73:4000/joke';
 
 export default {
   name: 'home',
