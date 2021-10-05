@@ -32,7 +32,16 @@ npm run start
 
 ---
 
+*ta-da!* 🎊
+
 ![alt text](https://raw.githubusercontent.com/JamesScript7/goliath-pi/master/src/assets/screenshot1.png)
+
+
+## APIs
+- Gmail (to grab daily stats email)
+- Unsplash
+- Jokes.One
+- OpenWeatherMap
 
 ## Floor plan
 
