@@ -1,5 +1,5 @@
 <template>
-  <div class="wallpaper">
+  <div id="wallpaper">
     <img :alt="imgDescription" :src="imgUrl">
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style scoped>
-.wallpaper img {
+#wallpaper img {
   min-width: 100%;
   min-height: 100%;
   position: fixed;

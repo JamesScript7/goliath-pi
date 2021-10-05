@@ -1,6 +1,6 @@
 # Internal Dashboard Kiosk
 
-This project uses Vue.js with Express.js ✌️
+This project uses Vue 2 with Express.js ✌️
 
 ## Client side project setup
 ```
@@ -31,6 +31,8 @@ npm run start
 ```
 
 ---
+
+![alt text](https://raw.githubusercontent.com/JamesScript7/goliath-pi/master/src/assets/screenshot1.png)
 
 ## Floor plan
 

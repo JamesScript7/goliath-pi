@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div id="home">
     <Wallpaper
       :imgUrl="imgUrl"
       :imgDescription="imgDescription" />
@@ -270,7 +270,7 @@ export default {
 </script>
 
 <style scoped>
-  .home {
+  #home {
     position: relative;
     width: 100%;
     height: 100vh;

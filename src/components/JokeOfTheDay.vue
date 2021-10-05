@@ -1,5 +1,5 @@
 <template>
-  <div class="jokeoftheday" v-if="joke" :style="myStyle">
+  <div id="jokeoftheday" v-if="joke" :style="myStyle">
       <div class="lamejoke">
         {{ joke }}
       </div>
@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style scoped>
-.jokeoftheday {
+#jokeoftheday {
     position: fixed;
     font-size: 7rem;
     width: 100%;

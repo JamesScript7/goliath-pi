@@ -1,5 +1,5 @@
 <template>
-  <div class="dateandtime">
+  <div id="dateandtime">
     <div class="flex-container">
       <section class="dateandtime__left flex-column">
         <div class="dateandtime__day">{{ moment.day }}</div>
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style scoped>
-.dateandtime {
+#dateandtime {
   position: absolute;
   height: 100%;
   left: 30%;

@@ -1,5 +1,5 @@
 <template>
-  <div class="cureatrdailyreport">
+  <div id="cureatrdailyreport">
     <div><strong>Today's Stats</strong></div>
     <ul class="cureatrdailyreport__report">
       <li>
@@ -41,7 +41,7 @@ li {
   justify-content: space-between;
 }
 
-.cureatrdailyreport {
+#cureatrdailyreport {
   font-size: 1.5rem;
   position: fixed;
   right: 0;

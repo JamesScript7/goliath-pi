@@ -1,5 +1,5 @@
 <template>
-  <div class="weatherreport">
+  <div id="weatherreport">
     <div class="weatherreport__current">
       <div class="current__left">
         <div>
@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style scoped>
-.weatherreport {
+#weatherreport {
     position: fixed;
     bottom: 0;
     width: 100%;

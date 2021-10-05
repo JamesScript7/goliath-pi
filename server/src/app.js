@@ -5,7 +5,7 @@ import fetch from 'node-fetch';
 import fs from 'file-system';
 import readline from 'readline';
 import googleapis from 'googleapis';
-import Unsplash from 'unsplash-js';
+import { createApi } from 'unsplash-js';
 
 import {
   parseSnippet,
@@ -35,7 +35,7 @@ const allowCrossDomain = (req, res, next) => {
 };
 app.use(allowCrossDomain);
 
-const unsplash = new Unsplash.default({
+const unsplash = createApi({
   accessKey: process.env.UNSPLASH_ACCESS_KEY,
   secret: process.env.UNSPLASH_SECRET_KEY,
 });
@@ -125,9 +125,9 @@ app.get('/random-photo', (req, res) => {
     query: 'nature',
   };
 
-  unsplash.photos.getRandomPhoto(query)
-    .then(Unsplash.toJson).then((json) => {
-      res.send(json);
+  unsplash.photos.getRandom(query)
+    .then((data) => {
+      res.send(data.response);
     }).catch((err) => {
       console.log('Unsplash API returned an error:', err);
 
